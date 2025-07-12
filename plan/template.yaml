@@ -1,0 +1,95 @@
+# yaml-language-server: $schema=
+# 计划文件模板
+# 复制此文件并重命名为具体版本号（如1.1.0.yaml）来创建新的计划版本
+
+version: "x.y.z"  # 替换为实际版本号
+name: "项目计划名称"
+description: "项目计划的简要描述"
+
+goals:
+  primary:
+    - title: "主要目标1"
+      description: "详细描述主要目标的内容和预期结果"
+      status: "pending"  # pending, in_progress, completed, cancelled
+      priority: "high"   # high, medium, low
+    
+    - title: "主要目标2"
+      description: "详细描述主要目标的内容和预期结果"
+      status: "pending"
+      priority: "high"
+
+  secondary:
+    - title: "次要目标1"
+      description: "详细描述次要目标的内容和预期结果"
+      status: "pending"
+      priority: "medium"
+    
+    - title: "次要目标2"
+      description: "详细描述次要目标的内容和预期结果"
+      status: "pending"
+      priority: "low"
+
+milestones:
+  - name: "里程碑1"
+    version: "x.y.z"
+    target_date: "YYYY-MM-DD"
+    deliverables:
+      - "交付物1"
+      - "交付物2"
+
+  - name: "里程碑2"
+    version: "x.y.z"
+    target_date: "YYYY-MM-DD"
+    deliverables:
+      - "交付物3"
+      - "交付物4"
+
+tasks:
+  - id: "T001"
+    title: "任务标题"
+    description: "任务的详细描述"
+    assignee: "负责人"
+    status: "pending"  # pending, in_progress, completed, cancelled
+    priority: "medium" # high, medium, low
+    created_date: "YYYY-MM-DD"
+    due_date: "YYYY-MM-DD"
+    dependencies: []   # 依赖的其他任务ID列表
+    
+  - id: "T002"
+    title: "另一个任务"
+    description: "任务的详细描述"
+    assignee: "负责人"
+    status: "pending"
+    priority: "low"
+    created_date: "YYYY-MM-DD"
+    due_date: "YYYY-MM-DD"
+    dependencies: ["T001"]
+
+# 可选的额外字段
+resources:
+  - type: "documentation"
+    name: "相关文档"
+    url: "https://example.com/docs"
+  
+  - type: "tool"
+    name: "使用工具"
+    url: "https://example.com/tool"
+
+risks:
+  - description: "潜在风险描述"
+    impact: "high"     # high, medium, low
+    probability: "low" # high, medium, low
+    mitigation: "风险缓解措施"
+
+success_criteria:
+  - "成功标准1：具体可衡量的指标"
+  - "成功标准2：具体可衡量的指标"
+  - "成功标准3：具体可衡量的指标"
+
+metadata:
+  created_by: "创建者"
+  created_date: "YYYY-MM-DD"
+  last_modified: "YYYY-MM-DD"
+  template_type: "project_plan"
+  compatible_versions: ["x.y.z"]
+  tags: ["标签1", "标签2"]

@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=
+version: "0.0.0"
+name: "PearAI仓库模板计划"
+description: "这是一个用于PearAI交互的仓库模板计划文件"
+
+goals:
+  primary:
+    - title: "建立项目基础结构"
+      description: "创建项目的基本目录和文件结构"
+      status: "pending"
+      priority: "high"
+    
+    - title: "定义项目规则"
+      description: "制定项目开发和维护的基本规则"
+      status: "pending" 
+      priority: "high"
+
+  secondary:
+    - title: "优化用户体验"
+      description: "改进与PearAI的交互体验"
+      status: "pending"
+      priority: "medium"
+    
+    - title: "扩展功能模块"
+      description: "根据需求添加新的功能模块"
+      status: "pending"
+      priority: "low"
+
+milestones:
+  - name: "初始版本"
+    version: "0.0.0"
+    target_date: "2025-01-15"
+    deliverables:
+      - "基础文件结构"
+      - "规则文档"
+      - "计划模板"
+
+  - name: "功能完善"
+    version: "0.1.0" 
+    target_date: "2025-02-15"
+    deliverables:
+      - "用户交互优化"
+      - "文档完善"
+
+tasks:
+  - id: "T001"
+    title: "创建规则文件"
+    description: "编写项目规则和约定"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-01-12"
+    
+  - id: "T002"
+    title: "创建计划模板"
+    description: "设计可复用的计划文件模板"
+    assignee: "PearAI"
+    status: "in_progress"
+    created_date: "2025-01-12"
+
+metadata:
+  created_by: "PearAI"
+  created_date: "2025-01-12"
+  last_modified: "2025-01-12"
+  template_type: "repository_template"
+  compatible_versions: ["0.0.0", "0.1.0"]

@@ -1,0 +1,14 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "!plan/*.yaml",
+    "https://json.schemastore.org/aws-cloudformation.json": "!plan/*.yaml"
+  },
+  "yaml.schemaStore.enable": true,
+  "yaml.customTags": [
+    "!reference sequence"
+  ],
+  "files.associations": {
+    "plan/*.yaml": "yaml",
+    "plan/*.yml": "yaml"
+  }
+}
