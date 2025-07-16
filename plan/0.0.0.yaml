@@ -7,18 +7,18 @@ goals:
   primary:
     - title: "建立项目基础结构"
       description: "创建项目的基本目录和文件结构"
-      status: "pending"
+      status: "completed"
       priority: "high"
     
     - title: "定义项目规则"
       description: "制定项目开发和维护的基本规则"
-      status: "pending" 
+      status: "completed"
       priority: "high"
 
   secondary:
     - title: "优化用户体验"
-      description: "改进与PearAI的交互体验"
-      status: "pending"
+      description: "改进与PearAI的交互体验，添加init.sh初始化脚本"
+      status: "completed"
       priority: "medium"
     
     - title: "扩展功能模块"
@@ -54,12 +54,21 @@ tasks:
     title: "创建计划模板"
     description: "设计可复用的计划文件模板"
     assignee: "PearAI"
-    status: "in_progress"
+    status: "completed"
     created_date: "2025-01-12"
+    
+  - id: "T003"
+    title: "添加项目初始化脚本"
+    description: "创建交互式init.sh脚本，支持项目自动配置和技术栈选择"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
 
 metadata:
   created_by: "PearAI"
   created_date: "2025-01-12"
-  last_modified: "2025-01-12"
+  last_modified: "2025-07-17"
   template_type: "repository_template"
   compatible_versions: ["0.0.0", "0.1.0"]
+  notes: "已添加init.sh交互式初始化脚本，支持自动项目配置"
