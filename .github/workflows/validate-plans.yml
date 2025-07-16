@@ -1,0 +1,58 @@
+name: 验证计划文件
+
+on:
+  push:
+    paths:
+      - 'plan/*.yaml'
+      - 'plan/*.yml'
+      - 'schemas/*.json'
+      - 'scripts/validate.js'
+  pull_request:
+    paths:
+      - 'plan/*.yaml'
+      - 'plan/*.yml'
+      - 'schemas/*.json'
+      - 'scripts/validate.js'
+
+jobs:
+  validate:
+    name: 验证计划文件格式
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 安装依赖
+      run: npm install js-yaml
+      
+    - name: 验证计划文件
+      run: node scripts/validate.js
+      
+    - name: 检查 Schema 有效性
+      run: |
+        if [ -f "schemas/plan.schema.json" ]; then
+          echo "验证 JSON Schema 语法..."
+          node -e "JSON.parse(require('fs').readFileSync('schemas/plan.schema.json', 'utf8')); console.log('✅ Schema 语法正确');"
+        fi
+        
+    - name: 验证版本号一致性
+      run: |
+        echo "检查版本号一致性..."
+        for file in plan/*.yaml; do
+          if [ -f "$file" ] && [ "$(basename "$file")" != "template.yaml" ]; then
+            filename=$(basename "$file" .yaml)
+            version_in_file=$(node -e "const yaml = require('js-yaml'); const data = yaml.load(require('fs').readFileSync('$file', 'utf8')); console.log(data.version);")
+            if [ "$filename" != "$version_in_file" ]; then
+              echo "❌ 文件 $file 中的版本号 ($version_in_file) 与文件名 ($filename) 不匹配"
+              exit 1
+            fi
+          fi
+        done
+        echo "✅ 版本号一致性检查通过"

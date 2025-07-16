@@ -1,0 +1,385 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/pearai/template/main/schemas/plan.schema.json",
+  "title": "PearAI 计划文件 Schema",
+  "description": "用于验证 PearAI 仓库模板计划文件的 JSON Schema",
+  "type": "object",
+  "required": ["version", "name", "description", "goals", "metadata"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "语义化版本号，格式为 x.y.z"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "项目计划的名称"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "项目计划的详细描述"
+    },
+    "goals": {
+      "type": "object",
+      "description": "项目目标配置",
+      "properties": {
+        "primary": {
+          "type": "array",
+          "description": "主要目标列表",
+          "items": {
+            "$ref": "#/definitions/goal"
+          }
+        },
+        "secondary": {
+          "type": "array",
+          "description": "次要目标列表",
+          "items": {
+            "$ref": "#/definitions/goal"
+          }
+        }
+      },
+      "required": ["primary"],
+      "additionalProperties": false
+    },
+    "milestones": {
+      "type": "array",
+      "description": "里程碑列表",
+      "items": {
+        "$ref": "#/definitions/milestone"
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "description": "任务列表",
+      "items": {
+        "$ref": "#/definitions/task"
+      }
+    },
+    "resources": {
+      "type": "array",
+      "description": "资源列表",
+      "items": {
+        "$ref": "#/definitions/resource"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "风险列表",
+      "items": {
+        "$ref": "#/definitions/risk"
+      }
+    },
+    "success_criteria": {
+      "type": "array",
+      "description": "成功标准列表",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "metadata": {
+      "$ref": "#/definitions/metadata"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "goal": {
+      "type": "object",
+      "description": "目标定义",
+      "required": ["title", "description", "status", "priority"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "目标标题"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "目标详细描述"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "cancelled"],
+          "description": "目标状态"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "目标优先级"
+        },
+        "target_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "目标完成日期 (YYYY-MM-DD)"
+        },
+        "assignee": {
+          "type": "string",
+          "description": "负责人"
+        },
+        "tags": {
+          "type": "array",
+          "description": "标签列表",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "milestone": {
+      "type": "object",
+      "description": "里程碑定义",
+      "required": ["name", "version", "target_date"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "里程碑名称"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "里程碑版本号"
+        },
+        "target_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "目标完成日期 (YYYY-MM-DD)"
+        },
+        "description": {
+          "type": "string",
+          "description": "里程碑描述"
+        },
+        "deliverables": {
+          "type": "array",
+          "description": "交付物列表",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "cancelled"],
+          "description": "里程碑状态"
+        }
+      },
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "description": "任务定义",
+      "required": ["id", "title", "description", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^T\\d+$",
+          "description": "任务ID，格式为 T001, T002 等"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "任务标题"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "任务详细描述"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "cancelled"],
+          "description": "任务状态"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "任务优先级"
+        },
+        "assignee": {
+          "type": "string",
+          "description": "任务负责人"
+        },
+        "created_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "任务创建日期 (YYYY-MM-DD)"
+        },
+        "due_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "任务截止日期 (YYYY-MM-DD)"
+        },
+        "estimated_hours": {
+          "type": "number",
+          "minimum": 0,
+          "description": "预估工时（小时）"
+        },
+        "actual_hours": {
+          "type": "number",
+          "minimum": 0,
+          "description": "实际工时（小时）"
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "依赖的任务ID列表",
+          "items": {
+            "type": "string",
+            "pattern": "^T\\d+$"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "标签列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "description": "任务备注"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resource": {
+      "type": "object",
+      "description": "资源定义",
+      "required": ["type", "name"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["documentation", "tool", "library", "service", "person", "other"],
+          "description": "资源类型"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "资源名称"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "资源链接"
+        },
+        "description": {
+          "type": "string",
+          "description": "资源描述"
+        },
+        "availability": {
+          "type": "string",
+          "enum": ["available", "limited", "unavailable"],
+          "description": "资源可用性"
+        }
+      },
+      "additionalProperties": false
+    },
+    "risk": {
+      "type": "object",
+      "description": "风险定义",
+      "required": ["description", "impact", "probability"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "风险描述"
+        },
+        "impact": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "风险影响程度"
+        },
+        "probability": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "风险发生概率"
+        },
+        "mitigation": {
+          "type": "string",
+          "description": "风险缓解措施"
+        },
+        "contingency": {
+          "type": "string",
+          "description": "应急计划"
+        },
+        "owner": {
+          "type": "string",
+          "description": "风险负责人"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "元数据定义",
+      "required": ["created_by", "created_date", "last_modified"],
+      "properties": {
+        "created_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "创建者"
+        },
+        "created_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "创建日期 (YYYY-MM-DD)"
+        },
+        "last_modified": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "最后修改日期 (YYYY-MM-DD)"
+        },
+        "last_modified_by": {
+          "type": "string",
+          "description": "最后修改者"
+        },
+        "template_type": {
+          "type": "string",
+          "enum": ["project_plan", "repository_template", "feature_plan", "sprint_plan", "other"],
+          "description": "模板类型"
+        },
+        "compatible_versions": {
+          "type": "array",
+          "description": "兼容的版本列表",
+          "items": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "标签列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": "string",
+          "description": "分类"
+        },
+        "team": {
+          "type": "string",
+          "description": "团队"
+        },
+        "project_id": {
+          "type": "string",
+          "description": "项目ID"
+        },
+        "repository_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "仓库链接"
+        },
+        "documentation_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "文档链接"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

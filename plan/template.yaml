@@ -1,95 +1,145 @@
-# yaml-language-server: $schema=
-# 计划文件模板
-# 复制此文件并重命名为具体版本号（如1.1.0.yaml）来创建新的计划版本
+# yaml-language-server: $schema=https://raw.githubusercontent.com/pearai/template/main/schemas/plan.schema.json
+# 
+# PearAI 仓库模板 - 计划文件模板
+# ===================================
+# 
+# 使用说明：
+# 1. 复制此文件并重命名为具体版本号（如 1.1.0.yaml）
+# 2. 替换所有 "x.y.z" 为实际的语义化版本号
+# 3. 更新 YYYY-MM-DD 为实际日期
+# 4. 根据项目需求调整目标、任务和里程碑
+# 5. 运行 'node scripts/validate.js' 验证格式
+#
+# 语义化版本说明：
+# - 主版本 (x.0.0): 重大功能变更或架构调整
+# - 次版本 (x.y.0): 新功能添加，向后兼容
+# - 修订版 (x.y.z): 错误修复和小幅改进
 
-version: "x.y.z"  # 替换为实际版本号
-name: "项目计划名称"
-description: "项目计划的简要描述"
+# 基本信息
+version: "x.y.z"  # 语义化版本号，如 1.0.0, 1.1.0, 2.0.0
+name: "项目计划名称"  # 简洁明了的计划名称
+description: "项目计划的简要描述"  # 1-2 句话描述计划的主要内容
 
+# 项目目标
+# 目标分为主要目标和次要目标，每个目标都有明确的状态和优先级
 goals:
+  # 主要目标：项目的核心目标，通常是必须完成的
   primary:
     - title: "主要目标1"
-      description: "详细描述主要目标的内容和预期结果"
-      status: "pending"  # pending, in_progress, completed, cancelled
-      priority: "high"   # high, medium, low
+      description: "详细描述主要目标的内容和预期结果，包括具体的成功标准"
+      status: "pending"  # 状态：pending(待处理), in_progress(进行中), completed(已完成), cancelled(已取消)
+      priority: "high"   # 优先级：high(高), medium(中), low(低)
+      target_date: "YYYY-MM-DD"  # 可选：目标完成日期
+      assignee: "负责人"  # 可选：负责人
     
     - title: "主要目标2"
-      description: "详细描述主要目标的内容和预期结果"
+      description: "详细描述主要目标的内容和预期结果，包括具体的成功标准"
       status: "pending"
       priority: "high"
+      target_date: "YYYY-MM-DD"
+      assignee: "负责人"
 
+  # 次要目标：支持性目标，可以根据时间和资源情况调整
   secondary:
     - title: "次要目标1"
-      description: "详细描述次要目标的内容和预期结果"
+      description: "详细描述次要目标的内容和预期结果，可以是增强功能或优化改进"
       status: "pending"
       priority: "medium"
+      target_date: "YYYY-MM-DD"
     
     - title: "次要目标2"
-      description: "详细描述次要目标的内容和预期结果"
+      description: "详细描述次要目标的内容和预期结果，可以是增强功能或优化改进"
       status: "pending"
       priority: "low"
+      target_date: "YYYY-MM-DD"
 
+# 里程碑设置
+# 里程碑是项目的重要节点，用于跟踪项目进度和交付物
 milestones:
-  - name: "里程碑1"
-    version: "x.y.z"
-    target_date: "YYYY-MM-DD"
-    deliverables:
-      - "交付物1"
-      - "交付物2"
+  - name: "里程碑1"  # 里程碑的名称，如 "MVP 版本"、"Beta 测试"
+    version: "x.y.z"  # 对应的版本号
+    target_date: "YYYY-MM-DD"  # 目标完成日期
+    description: "里程碑的详细描述"  # 可选：里程碑的说明
+    status: "pending"  # 可选：里程碑状态
+    deliverables:  # 该里程碑的交付物清单
+      - "交付物1：如完成的功能或文档"
+      - "交付物2：如测试报告或部署环境"
 
   - name: "里程碑2"
     version: "x.y.z"
     target_date: "YYYY-MM-DD"
+    description: "里程碑的详细描述"
+    status: "pending"
     deliverables:
-      - "交付物3"
-      - "交付物4"
+      - "交付物3：如性能优化结果"
+      - "交付物4：如用户手册"
 
+# 任务列表
+# 任务是具体的工作项，需要有明确的负责人和完成时间
 tasks:
-  - id: "T001"
-    title: "任务标题"
-    description: "任务的详细描述"
-    assignee: "负责人"
-    status: "pending"  # pending, in_progress, completed, cancelled
-    priority: "medium" # high, medium, low
-    created_date: "YYYY-MM-DD"
-    due_date: "YYYY-MM-DD"
-    dependencies: []   # 依赖的其他任务ID列表
+  - id: "T001"  # 任务唯一标识，格式为 T001, T002, T003...
+    title: "任务标题"  # 简洁明了的任务标题
+    description: "任务的详细描述，包括具体要做什么，如何验证完成"
+    assignee: "负责人"  # 任务负责人
+    status: "pending"  # 任务状态：pending(待处理), in_progress(进行中), completed(已完成), cancelled(已取消)
+    priority: "medium"  # 任务优先级：high(高), medium(中), low(低)
+    created_date: "YYYY-MM-DD"  # 任务创建日期
+    due_date: "YYYY-MM-DD"  # 任务截止日期
+    estimated_hours: 8  # 可选：预估工时（小时）
+    dependencies: []  # 依赖的其他任务ID列表，如 ["T002", "T003"]
+    tags: ["标签1", "标签2"]  # 可选：任务标签
     
   - id: "T002"
     title: "另一个任务"
-    description: "任务的详细描述"
+    description: "任务的详细描述，说明任务的具体要求和验收标准"
     assignee: "负责人"
     status: "pending"
     priority: "low"
     created_date: "YYYY-MM-DD"
     due_date: "YYYY-MM-DD"
-    dependencies: ["T001"]
+    estimated_hours: 4
+    dependencies: ["T001"]  # 此任务依赖于 T001 的完成
+    tags: ["后端", "数据库"]
 
-# 可选的额外字段
+# 项目资源 (可选)
+# 记录项目相关的资源，如文档、工具、服务等
 resources:
-  - type: "documentation"
-    name: "相关文档"
-    url: "https://example.com/docs"
+  - type: "documentation"  # 资源类型：documentation(文档), tool(工具), library(库), service(服务)
+    name: "相关文档"  # 资源名称
+    url: "https://example.com/docs"  # 资源链接
+    description: "项目相关的技术文档或规范"  # 可选：资源描述
   
   - type: "tool"
     name: "使用工具"
     url: "https://example.com/tool"
+    description: "项目开发过程中使用的工具"
 
+# 风险评估 (可选)
+# 识别项目可能面临的风险并制定应对措施
 risks:
-  - description: "潜在风险描述"
-    impact: "high"     # high, medium, low
-    probability: "low" # high, medium, low
-    mitigation: "风险缓解措施"
+  - description: "潜在风险的详细描述，如技术难度、时间限制等"
+    impact: "high"  # 风险影响程度：high(高), medium(中), low(低)
+    probability: "low"  # 风险发生概率：high(高), medium(中), low(低)
+    mitigation: "风险缓解措施，如备选方案、预防措施等"
+    owner: "风险负责人"  # 可选：风险管理负责人
 
+# 成功标准 (可选)
+# 定义项目成功的具体标准，必须是可量化的
 success_criteria:
-  - "成功标准1：具体可衡量的指标"
-  - "成功标准2：具体可衡量的指标"
-  - "成功标准3：具体可衡量的指标"
+  - "成功标准1：具体可衡量的指标，如用户增长率达到 20%"
+  - "成功标准2：具体可衡量的指标，如系统响应时间小于 200ms"
+  - "成功标准3：具体可衡量的指标，如测试覆盖率达到 90%"
 
+# 元数据 (必需)
+# 记录计划文件的创建和修改信息
 metadata:
-  created_by: "创建者"
-  created_date: "YYYY-MM-DD"
-  last_modified: "YYYY-MM-DD"
-  template_type: "project_plan"
-  compatible_versions: ["x.y.z"]
-  tags: ["标签1", "标签2"]
+  created_by: "创建者"  # 计划文件创建者
+  created_date: "YYYY-MM-DD"  # 创建日期
+  last_modified: "YYYY-MM-DD"  # 最后修改日期
+  last_modified_by: "最后修改者"  # 可选：最后修改者
+  template_type: "project_plan"  # 模板类型：project_plan(项目计划), feature_plan(功能计划)
+  compatible_versions: ["x.y.z"]  # 兼容的版本列表
+  tags: ["标签1", "标签2"]  # 项目标签，如 ["前端", "React", "移动端"]
+  category: "项目分类"  # 可选：项目分类
+  team: "团队名称"  # 可选：负责团队
+  repository_url: "https://github.com/user/repo"  # 可选：代码仓库链接

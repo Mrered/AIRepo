@@ -1,0 +1,39 @@
+{
+  "name": "pearai-repository-template",
+  "version": "1.0.0",
+  "description": "PearAI 仓库模板 - 用于与 AI 助手协作的项目管理模板",
+  "main": "index.js",
+  "scripts": {
+    "validate": "node scripts/validate.js",
+    "new-version": "node scripts/new-version.js",
+    "progress": "node scripts/progress.js",
+    "setup": "node scripts/setup-wizard.js",
+    "init": "./init.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pearai",
+    "template",
+    "project-management",
+    "ai-assistant",
+    "yaml",
+    "planning"
+  ],
+  "author": "PearAI Team",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pearai/template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pearai/template/issues"
+  },
+  "homepage": "https://github.com/pearai/template#readme"
+}

@@ -1,0 +1,280 @@
+name: 持续集成
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # 检测项目类型并设置矩阵
+  detect:
+    name: 检测项目类型
+    runs-on: ubuntu-latest
+    outputs:
+      has-node: ${{ steps.detect.outputs.has-node }}
+      has-python: ${{ steps.detect.outputs.has-python }}
+      has-java: ${{ steps.detect.outputs.has-java }}
+      has-go: ${{ steps.detect.outputs.has-go }}
+      node-version: ${{ steps.detect.outputs.node-version }}
+      python-version: ${{ steps.detect.outputs.python-version }}
+      java-version: ${{ steps.detect.outputs.java-version }}
+      go-version: ${{ steps.detect.outputs.go-version }}
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 检测项目类型
+      id: detect
+      run: |
+        # 检测 Node.js 项目
+        if [ -f "package.json" ]; then
+          echo "has-node=true" >> $GITHUB_OUTPUT
+          node_version=$(node -e "console.log(require('./package.json').engines?.node || '18')" 2>/dev/null || echo "18")
+          echo "node-version=$node_version" >> $GITHUB_OUTPUT
+        else
+          echo "has-node=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # 检测 Python 项目
+        if [ -f "requirements.txt" ] || [ -f "pyproject.toml" ] || [ -f "setup.py" ]; then
+          echo "has-python=true" >> $GITHUB_OUTPUT
+          python_version=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null || echo "3.9")
+          echo "python-version=$python_version" >> $GITHUB_OUTPUT
+        else
+          echo "has-python=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # 检测 Java 项目
+        if [ -f "pom.xml" ] || [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
+          echo "has-java=true" >> $GITHUB_OUTPUT
+          echo "java-version=17" >> $GITHUB_OUTPUT
+        else
+          echo "has-java=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # 检测 Go 项目
+        if [ -f "go.mod" ]; then
+          echo "has-go=true" >> $GITHUB_OUTPUT
+          go_version=$(grep "^go " go.mod | cut -d' ' -f2 || echo "1.21")
+          echo "go-version=$go_version" >> $GITHUB_OUTPUT
+        else
+          echo "has-go=false" >> $GITHUB_OUTPUT
+        fi
+
+  # Node.js 项目测试
+  test-node:
+    name: Node.js 测试
+    needs: detect
+    if: needs.detect.outputs.has-node == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: 安装依赖
+      run: npm ci
+      
+    - name: 运行 ESLint
+      run: npm run lint
+      continue-on-error: true
+      
+    - name: 运行类型检查
+      run: npm run typecheck
+      continue-on-error: true
+      
+    - name: 运行测试
+      run: npm test
+      
+    - name: 运行构建
+      run: npm run build
+      
+    - name: 上传测试覆盖率
+      uses: codecov/codecov-action@v3
+      if: matrix.node-version == '18'
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  # Python 项目测试
+  test-python:
+    name: Python 测试
+    needs: detect
+    if: needs.detect.outputs.has-python == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+        
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        
+    - name: 运行 Flake8
+      run: |
+        pip install flake8
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      continue-on-error: true
+      
+    - name: 运行 Black 格式检查
+      run: |
+        pip install black
+        black --check .
+      continue-on-error: true
+      
+    - name: 运行测试
+      run: |
+        pip install pytest pytest-cov
+        pytest --cov=. --cov-report=xml
+        
+    - name: 上传测试覆盖率
+      uses: codecov/codecov-action@v3
+      if: matrix.python-version == '3.9'
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  # Java 项目测试
+  test-java:
+    name: Java 测试
+    needs: detect
+    if: needs.detect.outputs.has-java == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [11, 17, 21]
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'temurin'
+        cache: 'maven'
+        
+    - name: 运行 Maven 测试
+      if: hashFiles('pom.xml') != ''
+      run: mvn clean test
+      
+    - name: 运行 Gradle 测试
+      if: hashFiles('build.gradle*') != ''
+      run: ./gradlew test
+      
+    - name: 上传测试覆盖率
+      uses: codecov/codecov-action@v3
+      if: matrix.java-version == '17'
+      with:
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  # Go 项目测试
+  test-go:
+    name: Go 测试
+    needs: detect
+    if: needs.detect.outputs.has-go == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.20, 1.21]
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+        cache: true
+        
+    - name: 运行 Go 模块下载
+      run: go mod download
+      
+    - name: 运行 Go 格式检查
+      run: |
+        gofmt -d .
+        test -z "$(gofmt -l .)"
+      continue-on-error: true
+      
+    - name: 运行 Go Vet
+      run: go vet ./...
+      
+    - name: 运行测试
+      run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+      
+    - name: 上传测试覆盖率
+      uses: codecov/codecov-action@v3
+      if: matrix.go-version == '1.21'
+      with:
+        file: ./coverage.txt
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  # 验证计划文件
+  validate-plans:
+    name: 验证计划文件
+    runs-on: ubuntu-latest
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: 安装依赖
+      run: npm install js-yaml
+      
+    - name: 验证计划文件
+      run: node scripts/validate.js
+
+  # 安全扫描
+  security:
+    name: 安全扫描
+    runs-on: ubuntu-latest
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 运行 Trivy 漏洞扫描
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: 上传 Trivy 扫描结果
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'

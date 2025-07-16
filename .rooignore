@@ -1,0 +1,82 @@
+# .rooignore 文件
+# 此文件用于防止 PearAI 和其他 AI 助手读取敏感文件
+# 语法类似 .gitignore，支持通配符和路径模式
+
+# 环境变量文件
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# 敏感配置文件
+config/secrets.json
+config/database.json
+config/auth.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 私有目录
+secrets/
+private/
+confidential/
+keys/
+credentials/
+
+# 日志文件（可能包含敏感信息）
+*.log
+logs/
+log/
+
+# 临时文件
+tmp/
+temp/
+.tmp/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 用户特定配置
+.vscode/settings.json
+.idea/
+*.iml
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 依赖和缓存
+node_modules/
+.npm/
+.yarn/
+vendor/
+.cache/
+
+# 构建输出
+build/
+dist/
+out/
+target/
+
+# 测试覆盖率报告
+coverage/
+.nyc_output/
+
+# 文档生成
+docs/build/
+site/
+
+# 个人笔记和草稿
+notes/
+drafts/
+personal/
