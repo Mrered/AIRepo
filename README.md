@@ -6,7 +6,7 @@
 
 ```bash
 # 1. 克隆或用这个模板
-git clone <your-repo>
+git clone https://github.com/Mrered/AIRepo.git
 
 # 2. 一键初始化
 chmod +x init.sh && ./init.sh
