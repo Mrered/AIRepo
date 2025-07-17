@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=
+version: "0.1.0"
+name: "规则文件管理规范增强计划"
+description: "向项目规则文件添加新的管理规则，确保计划优先原则和格式规范化"
+
+goals:
+  primary:
+    - title: "添加计划优先原则规则"
+      description: "在规则文件中添加计划优先原则：每次用户提出需求时，必须先创建或修改计划文件，然后再安排其他角色完成计划里的任务，不能直接布置任务给其他角色"
+      status: "completed"
+      priority: "high"
+    
+    - title: "添加格式规范要求规则"
+      description: "在规则文件中添加格式规范要求：所有计划文件必须严格遵循template.yaml模板格式，禁止出现扩展字段"
+      status: "completed"
+      priority: "high"
+
+  secondary:
+    - title: "添加任务状态管理规则"
+      description: "在规则文件中添加任务状态管理：每次完成计划后，必须修改计划中的任务状态"
+      status: "completed"
+      priority: "medium"
+    
+    - title: "添加历史任务继承规则"
+      description: "在规则文件中添加历史任务继承：在创建新计划时，需要考虑之前计划未完成的任务"
+      status: "completed"
+      priority: "medium"
+
+milestones:
+  - name: "规则添加完成"
+    version: "0.1.0"
+    target_date: "2025-07-18"
+    deliverables:
+      - "更新后的规则文件"
+      - "符合规范的新计划文件"
+
+tasks:
+  - id: "T101"
+    title: "创建0.1.0计划文件"
+    description: "根据template.yaml模板创建0.1.0.yaml计划文件"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: []
+
+  - id: "T102"
+    title: "添加计划优先原则规则"
+    description: "在规则文件中添加计划优先原则的具体内容"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T101"]
+
+  - id: "T103"
+    title: "添加格式规范要求规则"
+    description: "在规则文件中添加格式规范要求的具体内容"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T101"]
+
+  - id: "T104"
+    title: "添加任务状态管理规则"
+    description: "在规则文件中添加任务状态管理的具体内容"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "medium"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T101"]
+
+  - id: "T105"
+    title: "添加历史任务继承规则"
+    description: "在规则文件中添加历史任务继承的具体内容"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "medium"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T101"]
+
+  - id: "T106"
+    title: "验证规则完整性"
+    description: "检查所有新添加的规则是否符合要求，格式是否正确"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "low"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T102", "T103", "T104", "T105"]
+
+metadata:
+  created_by: "PearAI"
+  created_date: "2025-07-18"
+  last_modified: "2025-07-18"
+  template_type: "project_plan"
+  compatible_versions: ["0.0.0", "0.1.0"]
+  tags: ["规则管理", "计划规范", "流程优化"]

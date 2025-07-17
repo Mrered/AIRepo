@@ -65,7 +65,6 @@ tasks:
     due_date: "YYYY-MM-DD"
     dependencies: ["T001"]
 
-# 可选的额外字段
 resources:
   - type: "documentation"
     name: "相关文档"
