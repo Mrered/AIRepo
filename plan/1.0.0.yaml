@@ -1,0 +1,181 @@
+# yaml-language-server: $schema=
+version: "1.0.0"
+name: "规则文件重构计划"
+description: "将单一的规则文件重构为按Agent细分的独立规则文件系统，每个Agent拥有独立的规则文件"
+
+goals:
+  primary:
+    - title: "重构规则文件结构"
+      description: "将原有单一的.rules.md文件拆分为按Agent细分的独立规则文件，每个Agent拥有专门的规则文件"
+      status: "completed"
+      priority: "high"
+    
+    - title: "建立Agent规则体系"
+      description: "为Orchestrator、Code、Architect、Ask、Debug每个Agent创建独立的规则文件，明确各Agent的职责和权限"
+      status: "completed"
+      priority: "high"
+    
+    - title: "优化规则组织结构"
+      description: "创建.roo/rules/目录结构，将规则文件按Agent类型组织，便于管理和维护"
+      status: "completed"
+      priority: "high"
+
+  secondary:
+    - title: "完善规则内容"
+      description: "为每个Agent的规则文件添加详细的职责说明、权限规范和交互准则"
+      status: "completed"
+      priority: "medium"
+    
+    - title: "保持向后兼容性"
+      description: "确保重构后的规则系统与原有计划文件和模板保持兼容"
+      status: "completed"
+      priority: "medium"
+
+milestones:
+  - name: "规则文件重构完成"
+    version: "1.0.0"
+    target_date: "2025-07-18"
+    deliverables:
+      - "Agent细分规则文件"
+      - "重构后的规则目录结构"
+      - "完整的Agent规则体系"
+
+tasks:
+  - id: "T200"
+    title: "创建Agent规则目录结构"
+    description: "创建.roo/rules/目录，按Agent类型组织规则文件"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: []
+
+  - id: "T201"
+    title: "创建Orchestrator规则文件"
+    description: "创建.roo/rules-orchestrator/orchestrator.md，定义Orchestrator模式的规则和职责"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T200"]
+
+  - id: "T202"
+    title: "创建Code规则文件"
+    description: "创建.roo/rules-code/code.md，定义Code模式的规则、权限和开发规范"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T200"]
+
+  - id: "T203"
+    title: "创建Architect规则文件"
+    description: "创建.roo/rules-architect/architect.md，定义Architect模式的规则和架构设计规范"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T200"]
+
+  - id: "T204"
+    title: "创建Ask规则文件"
+    description: "创建.roo/rules-ask/ask.md，定义Ask模式的规则和信息查询规范"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T200"]
+
+  - id: "T205"
+    title: "创建Debug规则文件"
+    description: "创建.roo/rules-debug/debug.md，定义Debug模式的规则和调试规范"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T200"]
+
+  - id: "T206"
+    title: "更新主规则文件"
+    description: "更新.roo/rules/rules.md，调整为协调各Agent规则的总体规则文件"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "medium"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T201", "T202", "T203", "T204", "T205"]
+
+  - id: "T207"
+    title: "验证规则系统完整性"
+    description: "检查所有Agent规则文件是否完整，确保规则系统可以正常工作"
+    assignee: "PearAI"
+    status: "completed"
+    priority: "low"
+    created_date: "2025-07-18"
+    due_date: "2025-07-18"
+    completed_date: "2025-07-18"
+    dependencies: ["T206"]
+
+resources:
+  - type: "documentation"
+    name: "Orchestrator规则"
+    url: "./.roo/rules-orchestrator/orchestrator.md"
+  
+  - type: "documentation"
+    name: "Code规则"
+    url: "./.roo/rules-code/code.md"
+  
+  - type: "documentation"
+    name: "Architect规则"
+    url: "./.roo/rules-architect/architect.md"
+  
+  - type: "documentation"
+    name: "Ask规则"
+    url: "./.roo/rules-ask/ask.md"
+  
+  - type: "documentation"
+    name: "Debug规则"
+    url: "./.roo/rules-debug/debug.md"
+  
+  - type: "documentation"
+    name: "主规则文件"
+    url: "./.roo/rules/rules.md"
+
+risks:
+  - description: "规则文件分散可能导致维护复杂度增加"
+    impact: "medium"
+    probability: "low"
+    mitigation: "建立清晰的文件命名规范和更新流程"
+  
+  - description: "Agent规则之间可能存在冲突"
+    impact: "low"
+    probability: "medium"
+    mitigation: "通过主规则文件进行协调，定期审查各Agent规则的一致性"
+
+success_criteria:
+  - "每个Agent拥有独立的规则文件"
+  - "规则文件按Agent类型清晰组织"
+  - "主规则文件成功协调各Agent规则"
+  - "重构后的规则系统保持向后兼容"
+  - "所有Agent规则文件内容完整且一致"
+
+metadata:
+  created_by: "PearAI"
+  created_date: "2025-07-18"
+  last_modified: "2025-07-18"
+  template_type: "project_plan"
+  compatible_versions: ["0.0.0", "0.1.0", "1.0.0"]
+  tags: ["规则重构", "Agent规则", "文件结构优化", "1.0.0版本"]
