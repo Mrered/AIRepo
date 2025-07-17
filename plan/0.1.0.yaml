@@ -1,0 +1,121 @@
+# yaml-language-server: $schema=
+version: "0.1.0"
+name: "PearAI自动化工具链集成计划"
+description: "包含完整CI/CD流水线、代码质量检查、自动化测试和安全扫描的自动化工具链"
+
+goals:
+  primary:
+    - title: "建立自动化工具链模板系统"
+      description: "创建通用的自动化工具链模板，支持多种技术栈"
+      status: "completed"
+      priority: "high"
+    
+    - title: "完善规则文档"
+      description: "在规则文档中添加自动化工具链选择和使用规范"
+      status: "completed"
+      priority: "high"
+    
+    - title: "更新用户文档"
+      description: "在README中添加自动化工具链使用说明和最佳实践"
+      status: "completed"
+      priority: "high"
+
+  secondary:
+    - title: "创建详细使用指南"
+      description: "编写AUTOMATION_GUIDE.md提供详细的使用指导"
+      status: "completed"
+      priority: "medium"
+    
+    - title: "添加模板使用示例"
+      description: "为不同技术栈提供配置示例和最佳实践"
+      status: "completed"
+      priority: "medium"
+    
+    - title: "优化模板结构"
+      description: "确保模板文件具有良好的可扩展性和可维护性"
+      status: "completed"
+      priority: "low"
+
+milestones:
+  - name: "自动化工具链基础版本"
+    version: "0.1.0"
+    target_date: "2025-07-17"
+    deliverables:
+      - "通用CI/CD模板"
+      - "代码质量工具配置"
+      - "测试框架模板"
+      - "安全扫描配置"
+      - "详细使用指南"
+
+tasks:
+  - id: "T004"
+    title: "创建自动化模板目录结构"
+    description: "建立templates/automation目录及子目录结构"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T005"
+    title: "创建CI/CD模板文件"
+    description: "创建GitHub Actions、GitLab CI、Jenkins等CI/CD配置模板"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T006"
+    title: "创建代码质量模板"
+    description: "创建ESLint、Prettier、SonarQube等代码质量工具配置模板"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T007"
+    title: "创建测试框架模板"
+    description: "创建Jest、Cypress、pytest等测试框架配置模板"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T008"
+    title: "创建安全扫描模板"
+    description: "创建Snyk、安全扫描工作流等安全配置模板"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T009"
+    title: "更新规则文件"
+    description: "在.roo/rules/rules.md中添加自动化工具链使用规范"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T010"
+    title: "更新README文档"
+    description: "在README.md中添加自动化工具链使用说明"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+    
+  - id: "T011"
+    title: "创建使用指南"
+    description: "编写AUTOMATION_GUIDE.md提供详细的使用指导"
+    assignee: "PearAI"
+    status: "completed"
+    created_date: "2025-07-17"
+    completed_date: "2025-07-17"
+
+metadata:
+  created_by: "PearAI"
+  created_date: "2025-07-17"
+  last_modified: "2025-07-17"
+  template_type: "automation_toolchain"
+  compatible_versions: ["0.1.0", "0.2.0"]
+  notes: "已完成自动化工具链集成，包含完整的CI/CD、代码质量、测试和安全扫描模板"

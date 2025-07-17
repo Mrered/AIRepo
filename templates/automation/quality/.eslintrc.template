@@ -1,0 +1,80 @@
+# ESLint 配置模板
+# 适用于: JavaScript/TypeScript 项目
+# 使用说明:
+# 1. 将此文件重命名为 .eslintrc.js 或 .eslintrc.json
+# 2. 根据项目需求调整规则
+# 3. 安装对应的ESLint插件
+
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  extends: [
+    'eslint:recommended',
+    // TypeScript项目取消注释:
+    // '@typescript-eslint/recommended',
+    // React项目取消注释:
+    // 'plugin:react/recommended',
+    // 'plugin:react-hooks/recommended',
+    // Vue项目取消注释:
+    // 'plugin:vue/vue3-recommended',
+    // Prettier集成取消注释:
+    // 'prettier',
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    // TypeScript项目取消注释:
+    // parser: '@typescript-eslint/parser',
+  },
+  plugins: [
+    // TypeScript项目取消注释:
+    // '@typescript-eslint',
+    // React项目取消注释:
+    // 'react',
+    // 'react-hooks',
+    // Vue项目取消注释:
+    // 'vue',
+  ],
+  rules: {
+    // 基础代码质量规则
+    'no-console': 'warn',
+    'no-debugger': 'error',
+    'no-unused-vars': 'warn',
+    'prefer-const': 'error',
+    
+    // 代码风格规则
+    'indent': ['error', 2],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'always'],
+    'comma-dangle': ['error', 'always-multiline'],
+    
+    // 最佳实践
+    'no-var': 'error',
+    'object-shorthand': 'error',
+    'prefer-arrow-callback': 'error',
+    
+    // 安全性规则
+    'no-eval': 'error',
+    'no-implied-eval': 'error',
+    'no-new-func': 'error',
+  },
+  overrides: [
+    {
+      files: ['**/*.test.js', '**/*.spec.js', '**/*.test.ts', '**/*.spec.ts'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
+  ],
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    'build/',
+    'coverage/',
+    '*.min.js',
+  ],
+};

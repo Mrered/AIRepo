@@ -1,0 +1,79 @@
+// Cypress 配置模板
+// 适用于: 前端E2E测试
+// 使用说明:
+// 1. 将此文件重命名为 cypress.config.js
+// 2. 根据项目需求调整配置
+// 3. 安装 Cypress: npm install --save-dev cypress
+
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  // 项目配置
+  projectId: '{{PROJECT_NAME}}',
+  
+  // 测试配置
+  e2e: {
+    // 基础URL
+    baseUrl: 'http://localhost:3000',
+    
+    // 测试文件路径
+    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+    
+    // 支持文件
+    supportFile: 'cypress/support/e2e.js',
+    
+    // 超时配置
+    defaultCommandTimeout: 10000,
+    requestTimeout: 10000,
+    responseTimeout: 10000,
+    
+    // 视窗配置
+    viewportWidth: 1280,
+    viewportHeight: 720,
+    
+    // 视频配置
+    video: true,
+    videoUploadOnPasses: false,
+    
+    // 截图配置
+    screenshotOnRunFailure: true,
+    
+    // 重试配置
+    retries: {
+      runMode: 2,
+      openMode: 0
+    },
+    
+    // 环境变量
+    env: {
+      API_URL: 'http://localhost:8000',
+      ENVIRONMENT: 'testing'
+    },
+    
+    // 测试前钩子
+    setupNodeEvents(on, config) {
+      // 加载环境变量
+      config.env = {
+        ...config.env,
+        ...process.env
+      }
+      
+      // 返回配置
+      return config
+    }
+  },
+  
+  // 组件测试配置
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'webpack'
+    },
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
+  },
+  
+  // 全局配置
+  chromeWebSecurity: false,
+  modifyObstructiveCode: false,
+  experimentalStudio: true
+})

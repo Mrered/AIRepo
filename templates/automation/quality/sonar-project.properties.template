@@ -1,0 +1,46 @@
+# SonarQube 项目配置模板
+# 适用于: 所有技术栈项目
+# 使用说明:
+# 1. 将此文件重命名为 sonar-project.properties
+# 2. 根据项目实际情况调整参数
+# 3. 确保在CI/CD中配置SonarQube服务器地址和令牌
+
+# 项目基本信息
+sonar.projectKey={{PROJECT_NAME}}
+sonar.projectName={{PROJECT_NAME}}
+sonar.projectVersion=1.0
+
+# 项目描述
+sonar.projectDescription={{PROJECT_DESCRIPTION}}
+
+# 源代码路径
+sonar.sources=src
+sonar.tests=tests
+
+# 排除路径
+sonar.exclusions=**/node_modules/**,**/dist/**,**/build/**,**/coverage/**,**/*.min.js
+
+# 测试覆盖率报告路径
+sonar.javascript.lcov.reportPaths=coverage/lcov.info
+sonar.python.coverage.reportPaths=coverage.xml
+sonar.java.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+sonar.go.coverage.reportPaths=coverage.out
+
+# 编码规范
+sonar.sourceEncoding=UTF-8
+
+# 技术栈特定配置
+# Node.js项目
+sonar.javascript.file.suffixes=.js,.jsx,.ts,.tsx
+sonar.typescript.file.suffixes=.ts,.tsx
+
+# Python项目
+sonar.python.version=3
+sonar.python.file.suffixes=.py
+
+# Java项目
+sonar.java.binaries=target/classes
+sonar.java.libraries=target/dependency/*.jar
+
+# Go项目
+sonar.go.file.suffixes=.go

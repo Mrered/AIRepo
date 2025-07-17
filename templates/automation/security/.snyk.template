@@ -1,0 +1,101 @@
+# Snyk 安全配置模板
+# 适用于: 依赖安全扫描
+# 使用说明:
+# 1. 将此文件重命名为 .snyk
+# 2. 安装 Snyk CLI: npm install -g snyk
+# 3. 运行: snyk test
+# 4. 修复: snyk wizard
+
+# Snyk 配置文件
+version: v1.0.0
+
+# 忽略特定漏洞
+ignore:
+  # 示例：忽略特定漏洞
+  SNYK-JS-LODASH-567746:
+    - '*':
+        reason: 已评估为低风险，将在下个版本修复
+        expires: '2024-12-31T23:59:59.999Z'
+
+# 补丁配置
+patch: {}
+
+# 语言特定配置
+language-settings:
+  # JavaScript/TypeScript
+  javascript:
+    packageManager: npm
+    
+  # Python
+  python:
+    packageManager: pip
+    
+  # Java
+  java:
+    packageManager: maven
+    
+  # Go
+  golang:
+    packageManager: gomod
+
+# 排除文件
+exclude:
+  # 全局排除
+  global:
+    - node_modules/**
+    - dist/**
+    - build/**
+    - coverage/**
+    - *.test.js
+    - *.spec.js
+    
+  # 技术栈特定排除
+  code:
+    - vendor/**
+    - .git/**
+    - .github/**
+
+# 测试配置
+test:
+  # 测试目标
+  target:
+    - package.json
+    - requirements.txt
+    - pom.xml
+    - go.mod
+    
+  # 测试深度
+  depth: 5
+  
+  # 并行测试
+  parallel: true
+
+# 监控配置
+monitor:
+  # 监控分支
+  branches:
+    - main
+    - develop
+    
+  # 监控频率
+  frequency: daily
+    
+  # 通知设置
+  notifications:
+    email: true
+    slack: false
+
+# 策略配置
+policy:
+  # 安全级别
+  security:
+    level: high
+    
+  # 许可证级别
+  license:
+    level: medium
+    
+  # 自动修复
+  auto-fix:
+    enabled: true
+    pull-request: true
