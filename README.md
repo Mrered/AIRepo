@@ -69,6 +69,14 @@ secrets/
 private/
 ```
 
+## 🏷️ 自动版本标签
+
+自动从plan目录创建Git标签：
+
+- **触发条件**：推送plan/*.yaml到main分支
+- **标签格式**：`v{major}.{minor}.{patch}`
+- **检测源**：plan目录yaml文件的`version`字段
+
 ## 📄 许可证
 
 [MIT](LICENSE)

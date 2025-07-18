@@ -1,0 +1,65 @@
+name: Auto Version Tag
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plan/*.yaml'
+  workflow_dispatch:
+    inputs:
+      force_create:
+        description: 'Force create tag even if exists'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['true', 'false']
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate and push version tag
+        env:
+          FORCE: ${{ github.event.inputs.force_create }}
+        run: |
+          set -e
+          # 只处理 x.y.z.yaml 文件
+          versions=$(ls plan/*.yaml | grep -E 'plan/[0-9]+\.[0-9]+\.[0-9]+\.yaml' || true)
+          if [ -z "$versions" ]; then
+            echo "❌ 没有找到任何版本 yaml 文件"
+            exit 1
+          fi
+
+          # 提取版本号，并进行排序找出最大版本
+          max=$(printf "%s\n" $versions \
+            | sed -E 's|.*/([0-9]+\.[0-9]+\.[0-9]+)\.yaml$|\1|' \
+            | sort -V \
+            | tail -n1)
+
+          tag="v$max"
+          echo "⚙️ 使用 tag: $tag"
+
+          # 已存在 tag?
+          if git rev-parse --verify "$tag" >/dev/null 2>&1; then
+            if [ "$FORCE" = "true" ]; then
+              echo "♻️ tag 存在但 force=true，将重新创建"
+              git tag -d "$tag"
+              git push origin ":refs/tags/$tag"
+            else
+              echo "✅ tag 已存在，且没有启用 force，跳过。"
+              exit 0
+            fi
+          fi
+
+          # 创建并推送 tag
+          git tag "$tag"
+          git push origin "$tag"
+          echo "🎉 Tag 创建并推送完毕！"

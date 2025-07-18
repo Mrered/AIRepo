@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=
+version: "1.0.1"
+name: "自动标签系统增强"
+description: "新增自动标签系统脚本和测试，以及README文档的小幅更新"
+
+goals:
+  primary:
+    - title: "实现自动标签系统"
+      description: "创建基于提交信息的自动版本标签系统"
+      status: "completed"
+      priority: "high"
+
+  secondary:
+    - title: "完善项目文档"
+      description: "更新README文档以反映新功能"
+      status: "completed"
+      priority: "low"
+
+milestones:
+  - name: "自动标签功能完成"
+    version: "1.0.1"
+    target_date: "2025-07-19"
+    deliverables:
+      - "自动标签脚本 (.github/scripts/auto_tag.py)"
+      - "单元测试 (.github/scripts/test_auto_tag.py)"
+      - "GitHub Actions工作流 (.github/workflows/auto-tag.yaml)"
+
+tasks:
+  - id: "AUTO-TAG-001"
+    title: "创建自动标签脚本"
+    description: "实现解析提交信息并生成版本标签的Python脚本"
+    assignee: "AIRepo Team"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-19"
+    due_date: "2025-07-19"
+    dependencies: []
+
+  - id: "AUTO-TAG-003"
+    title: "配置GitHub Actions"
+    description: "创建GitHub Actions工作流以在合并时自动执行标签生成"
+    assignee: "AIRepo Team"
+    status: "completed"
+    priority: "high"
+    created_date: "2025-07-19"
+    due_date: "2025-07-19"
+    dependencies: ["AUTO-TAG-001", "AUTO-TAG-002"]
+
+  - id: "DOC-UPDATE-001"
+    title: "更新README文档"
+    description: "在README中添加自动标签功能的使用说明"
+    assignee: "AIRepo Team"
+    status: "completed"
+    priority: "low"
+    created_date: "2025-07-19"
+    due_date: "2025-07-19"
+    dependencies: ["AUTO-TAG-001"]
+
+resources:
+  - type: "documentation"
+    name: "语义化版本规范"
+    url: "https://semver.org/lang/zh-CN/"
+  
+  - type: "tool"
+    name: "GitHub Actions"
+    url: "https://docs.github.com/cn/actions"
+
+risks:
+  - description: "提交信息格式不规范可能导致标签生成错误"
+    impact: "medium"
+    probability: "low"
+    mitigation: "在README中明确提交信息格式要求，并提供示例"
+
+success_criteria:
+  - "自动标签脚本能够正确解析所有标准格式的提交信息"
+  - "GitHub Actions工作流在PR合并时正确触发"
+  - "README文档包含清晰的使用说明"
+
+metadata:
+  created_by: "AIRepo Team"
+  created_date: "2025-07-19"
+  last_modified: "2025-07-19"
+  template_type: "project_plan"
+  compatible_versions: ["1.0.0", "1.0.1"]
+  tags: ["自动化", "git-tags", "github-actions", "semver"]
